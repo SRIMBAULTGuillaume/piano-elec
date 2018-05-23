@@ -1,5 +1,5 @@
 const electron = require('electron')
-const { ipcMain } = require('electron')
+const { ipcMain, globalShortcut } = require('electron')
 const path = require('path')
 const url = require('url')
 
@@ -40,7 +40,7 @@ ipcMain.on('change-size', (event, arg) => {
 })
 
 app.on('ready', () => {
-    createWindow()
+    createWindow();
 })
 
 app.on('activate', function () {

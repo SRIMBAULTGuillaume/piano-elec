@@ -3,33 +3,44 @@
     const { ipcRenderer } = require('electron');
     const { BrowserWindow } = require('electron').remote;
 
+    var button = document.getElementById("button1");
+
     function init() {
-        console.log('yo')
+        console.log('init')
+
+        window.onkeydown = function (e) {
+            var key = e.keyCode ? e.keyCode : e.which;
+            if (key == 71)
+                button.dispatchEvent(new Event("mousedown"));
+        }
+
+        window.onkeyup = function (e) {
+            var key = e.keyCode ? e.keyCode : e.which;
+            if (key == 71) 
+                button.dispatchEvent(new Event("mouseup"));
+        }
+        
+        init_event();
+    };
+
+    function init_event() {
         // Minimize task
         document.getElementById('min-btn').addEventListener('click', function () {
-            console.log("clicked")
-            var window = BrowserWindow.getFocusedWindow();
+            let window = BrowserWindow.getFocusedWindow();
             window.minimize();
         });
 
         // Maximize window
         document.getElementById('max-btn').addEventListener('click', function () {
-
-            var window = BrowserWindow.getFocusedWindow();
-            if (window.isMaximized()) {
-                ipcRenderer.send('resize-me-please');
-            } else {
-                window.maximize();
-            }
             ipcRenderer.send('change-size');
         });
 
         // Close app
         document.getElementById('exit-btn').addEventListener('click', function () {
-            var window = BrowserWindow.getFocusedWindow();
+            let window = BrowserWindow.getFocusedWindow();
             window.close();
         });
-    };
+    }
 
     document.onreadystatechange = () => {
         if (document.readyState == "complete") {

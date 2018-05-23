@@ -44,3 +44,18 @@ header{
 #exit-btn:hover {
     background-color: rgb(240, 40, 40)
 }
+
+.content {
+    display:flex;
+    justify-content:center;
+}
+
+#button1 {
+    background-color: rgb(31, 170, 31);
+    height: 100px;
+    width: 100px;
+}
+
+#button1.clicked {
+    background-color: rgb(101, 202, 101);
+}
