@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 html, body {
-    margin: 0;padding: 0;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 header{
@@ -50,12 +52,25 @@ header{
     justify-content:center;
 }
 
-#button1 {
+/* #button-1 {
     background-color: rgb(31, 170, 31);
     height: 100px;
     width: 100px;
 }
 
-#button1.clicked {
+#button-1.clicked {
+    background-color: rgb(101, 202, 101);
+} */
+
+.btn-clickable{
+    background-color: rgb(31, 170, 31);
+    height: 100px;
+    width: 100px;
+
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+}
+.btn-clickable.clicked {
     background-color: rgb(101, 202, 101);
 }
