@@ -3,19 +3,24 @@
     const { ipcRenderer } = require('electron');
     const { BrowserWindow } = require('electron').remote;
 
-    var button61;
-    var button62;
+    var context = new AudioContext()
 
     var buttonList;
+    var o = context.createOscillator();
+    var g = context.createGain();
 
     var mouseDown = false;
 
     function init() {
         window.buttonList = {};
-        window.buttonList.button70 = document.getElementById('button-70');
-        window.buttonList.button71 = document.getElementById('button-71');
 
         buttonList = document.getElementsByClassName('btn-clickable');
+
+        for (let i = 0; i < buttonList.length; i++) 
+            window.buttonList["button" + buttonList[i].dataset.key] = buttonList[i];
+
+        o.connect(g);
+        g.connect(context.destination);
 
         init_event();
     };
@@ -38,9 +43,14 @@
 
         window.onkeydown = function (e) {
             var key = e.keyCode ? e.keyCode : e.which;
-            console.log(key);
-            if (window.buttonList['button' + key] != undefined)
+            if (window.buttonList['button' + key] != undefined){
                 window.buttonList['button' + key].dispatchEvent(new Event("mousedown"));
+
+                
+            }
+                
+
+            
         }
 
         window.onkeyup = function (e) {
@@ -58,23 +68,49 @@
             mouseDown = false;
         }
 
-        for (var i = 0; i < buttonList.length; i++) {
+        for (let i = 0; i < buttonList.length; i++) {
 
             buttonList[i].addEventListener('mousedown', function (e) {
                 e.target.classList.add('clicked');
+                if (e.target.dataset.sound != undefined) {
+                    o = context.createOscillator();
+                    g = context.createGain();
+                    o.connect(g);
+                    g.connect(context.destination);
+                    o.start()
+                }
             })
 
             buttonList[i].addEventListener('mouseup', function (e) {
                 e.target.classList.remove('clicked');
+                if (e.target.dataset.sound != undefined) {
+                    g.gain.exponentialRampToValueAtTime(
+                        0.00001, context.currentTime + 0.04
+                    )
+                }
             })
 
             buttonList[i].addEventListener('pointerout', function (e) {
                 e.target.classList.remove('clicked');
+                if (e.target.dataset.sound != undefined) {
+                    g.gain.exponentialRampToValueAtTime(
+                        0.00001, context.currentTime + 0.04
+                    )
+                }
             })
 
             buttonList[i].addEventListener('pointerenter', function (e) {
-                if (mouseDown)
-                    e.target.classList.add('clicked');
+                if (!mouseDown)
+                    return;
+
+                e.target.classList.add('clicked');
+                if (e.target.dataset.sound != undefined) {
+                    o = context.createOscillator();
+                    g = context.createGain();
+                    o.connect(g);
+                    g.connect(context.destination);
+                    o.start()
+                }
             })
         }
     }

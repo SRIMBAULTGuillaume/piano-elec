@@ -49,18 +49,9 @@ header{
 
 .content {
     display:flex;
-    justify-content:center;
+    justify-content:space-around;
+    width: 100%;
 }
-
-/* #button-1 {
-    background-color: rgb(31, 170, 31);
-    height: 100px;
-    width: 100px;
-}
-
-#button-1.clicked {
-    background-color: rgb(101, 202, 101);
-} */
 
 .btn-clickable{
     background-color: rgb(31, 170, 31);
