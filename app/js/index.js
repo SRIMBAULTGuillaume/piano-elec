@@ -3,11 +3,11 @@
     const { ipcRenderer } = require('electron');
     const { BrowserWindow } = require('electron').remote;
 
-    var context = new AudioContext()
+    const oscillatorType = 'sine'; //sine, square, triangle, sawtooth
+
+    var context = new AudioContext();
 
     var buttonList;
-    var o = context.createOscillator();
-    var g = context.createGain();
 
     var mouseDown = false;
 
@@ -16,11 +16,21 @@
 
         buttonList = document.getElementsByClassName('btn-clickable');
 
-        for (let i = 0; i < buttonList.length; i++) 
-            window.buttonList["button" + buttonList[i].dataset.key] = buttonList[i];
+        for (let i = 0; i < buttonList.length; i++){
+            window.buttonList["button" + buttonList[i].dataset.key] = { };
+            let object = window.buttonList["button" + buttonList[i].dataset.key];
 
-        o.connect(g);
-        g.connect(context.destination);
+            object.btn = buttonList[i];
+            object.oscillator = context.createOscillator();
+            object.gain = context.createGain();
+            object.frequency = object.btn.dataset.frequency;
+
+            object.oscillator.connect(object.gain);
+            object.gain.connect(context.destination);
+
+            object.oscillator.type = oscillatorType;
+            object.oscillator.frequency.value = object.frequency;
+        }
 
         init_event();
     };
@@ -44,20 +54,15 @@
         window.onkeydown = function (e) {
             var key = e.keyCode ? e.keyCode : e.which;
             if (window.buttonList['button' + key] != undefined){
-                window.buttonList['button' + key].dispatchEvent(new Event("mousedown"));
-
-                
+                window.buttonList['button' + key].btn.dispatchEvent(new Event("mousedown"));
             }
-                
-
-            
         }
 
         window.onkeyup = function (e) {
             var key = e.keyCode ? e.keyCode : e.which;
 
             if (window.buttonList['button' + key] != undefined)
-                window.buttonList['button' + key].dispatchEvent(new Event("mouseup"));
+                window.buttonList['button' + key].btn.dispatchEvent(new Event("mouseup"));
         }
 
         
@@ -72,31 +77,34 @@
 
             buttonList[i].addEventListener('mousedown', function (e) {
                 e.target.classList.add('clicked');
-                if (e.target.dataset.sound != undefined) {
-                    o = context.createOscillator();
-                    g = context.createGain();
-                    o.connect(g);
-                    g.connect(context.destination);
-                    o.start()
-                }
+                startSound(e.target.dataset.key);
+                // if (e.target.dataset.sound != undefined) {
+                //     o = context.createOscillator();
+                //     g = context.createGain();
+                //     o.connect(g);
+                //     g.connect(context.destination);
+                //     o.start()
+                // }
             })
 
             buttonList[i].addEventListener('mouseup', function (e) {
                 e.target.classList.remove('clicked');
-                if (e.target.dataset.sound != undefined) {
-                    g.gain.exponentialRampToValueAtTime(
-                        0.00001, context.currentTime + 0.04
-                    )
-                }
+                stopSound(e.target.dataset.key);
+                // if (e.target.dataset.sound != undefined) {
+                //     g.gain.exponentialRampToValueAtTime(
+                //         0.00001, context.currentTime + 0.04
+                //     )
+                // }
             })
 
             buttonList[i].addEventListener('pointerout', function (e) {
                 e.target.classList.remove('clicked');
-                if (e.target.dataset.sound != undefined) {
-                    g.gain.exponentialRampToValueAtTime(
-                        0.00001, context.currentTime + 0.04
-                    )
-                }
+                stopSound(e.target.dataset.key);
+                // if (e.target.dataset.sound != undefined) {
+                //     g.gain.exponentialRampToValueAtTime(
+                //         0.00001, context.currentTime + 0.04
+                //     )
+                // }
             })
 
             buttonList[i].addEventListener('pointerenter', function (e) {
@@ -104,15 +112,35 @@
                     return;
 
                 e.target.classList.add('clicked');
-                if (e.target.dataset.sound != undefined) {
-                    o = context.createOscillator();
-                    g = context.createGain();
-                    o.connect(g);
-                    g.connect(context.destination);
-                    o.start()
-                }
+                startSound(e.target.dataset.key);
+                // if (e.target.dataset.sound != undefined) {
+                //     o = context.createOscillator();
+                //     g = context.createGain();
+                //     o.connect(g);
+                //     g.connect(context.destination);
+                //     o.start()
+                // }
             })
         }
+    }
+
+    function startSound(numBtn){
+        window.buttonList["button" + numBtn].oscillator.start();
+    }
+
+    function stopSound(numBtn){
+        let object = window.buttonList["button" + numBtn]
+        object.gain.gain.exponentialRampToValueAtTime(
+            0.00001, context.currentTime + 0.04
+        );
+        object.oscillator = context.createOscillator();
+        object.gain = context.createGain();
+
+        object.oscillator.connect(object.gain);
+        object.gain.connect(context.destination);
+
+        object.oscillator.type = oscillatorType;
+        object.oscillator.frequency.value = object.frequency;
     }
 
     document.onreadystatechange = () => {
