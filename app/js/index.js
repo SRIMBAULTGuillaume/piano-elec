@@ -5,7 +5,7 @@
 
     const oscillatorType = 'sine'; //sine, square, triangle, sawtooth
 
-    var context = new AudioContext();
+    const context = new AudioContext();
 
     var buttonList;
 
@@ -17,19 +17,13 @@
         buttonList = document.getElementsByClassName('btn-clickable');
 
         for (let i = 0; i < buttonList.length; i++){
-            window.buttonList["button" + buttonList[i].dataset.key] = { };
-            let object = window.buttonList["button" + buttonList[i].dataset.key];
 
-            object.btn = buttonList[i];
-            object.oscillator = context.createOscillator();
-            object.gain = context.createGain();
-            object.frequency = object.btn.dataset.frequency;
+            buttonList[i].touch = new touch(buttonList[i].dataset.key, 
+                                            buttonList[i].dataset.frequency, 
+                                            oscillatorType, 
+                                            context);
 
-            object.oscillator.connect(object.gain);
-            object.gain.connect(context.destination);
-
-            object.oscillator.type = oscillatorType;
-            object.oscillator.frequency.value = object.frequency;
+            buttonList[i].touch.setupSound();
         }
 
         init_event();
@@ -53,16 +47,16 @@
 
         window.onkeydown = function (e) {
             var key = e.keyCode ? e.keyCode : e.which;
-            if (window.buttonList['button' + key] != undefined){
-                window.buttonList['button' + key].btn.dispatchEvent(new Event("mousedown"));
-            }
+
+            if (document.getElementById('button-' + key) != undefined)
+                document.getElementById('button-' + key).dispatchEvent(new Event("mousedown"))
         }
 
         window.onkeyup = function (e) {
             var key = e.keyCode ? e.keyCode : e.which;
 
-            if (window.buttonList['button' + key] != undefined)
-                window.buttonList['button' + key].btn.dispatchEvent(new Event("mouseup"));
+            if (document.getElementById('button-' + key) != undefined)
+                document.getElementById('button-' + key).dispatchEvent(new Event("mouseup"))
         }
 
         
@@ -77,34 +71,17 @@
 
             buttonList[i].addEventListener('mousedown', function (e) {
                 e.target.classList.add('clicked');
-                startSound(e.target.dataset.key);
-                // if (e.target.dataset.sound != undefined) {
-                //     o = context.createOscillator();
-                //     g = context.createGain();
-                //     o.connect(g);
-                //     g.connect(context.destination);
-                //     o.start()
-                // }
+                e.target.touch.soundUp();
             })
 
             buttonList[i].addEventListener('mouseup', function (e) {
                 e.target.classList.remove('clicked');
-                stopSound(e.target.dataset.key);
-                // if (e.target.dataset.sound != undefined) {
-                //     g.gain.exponentialRampToValueAtTime(
-                //         0.00001, context.currentTime + 0.04
-                //     )
-                // }
+                e.target.touch.soundDown();
             })
 
             buttonList[i].addEventListener('pointerout', function (e) {
                 e.target.classList.remove('clicked');
-                stopSound(e.target.dataset.key);
-                // if (e.target.dataset.sound != undefined) {
-                //     g.gain.exponentialRampToValueAtTime(
-                //         0.00001, context.currentTime + 0.04
-                //     )
-                // }
+                e.target.touch.soundDown();
             })
 
             buttonList[i].addEventListener('pointerenter', function (e) {
@@ -112,35 +89,9 @@
                     return;
 
                 e.target.classList.add('clicked');
-                startSound(e.target.dataset.key);
-                // if (e.target.dataset.sound != undefined) {
-                //     o = context.createOscillator();
-                //     g = context.createGain();
-                //     o.connect(g);
-                //     g.connect(context.destination);
-                //     o.start()
-                // }
+                e.target.touch.soundUp();
             })
         }
-    }
-
-    function startSound(numBtn){
-        window.buttonList["button" + numBtn].oscillator.start();
-    }
-
-    function stopSound(numBtn){
-        let object = window.buttonList["button" + numBtn]
-        object.gain.gain.exponentialRampToValueAtTime(
-            0.00001, context.currentTime + 0.04
-        );
-        object.oscillator = context.createOscillator();
-        object.gain = context.createGain();
-
-        object.oscillator.connect(object.gain);
-        object.gain.connect(context.destination);
-
-        object.oscillator.type = oscillatorType;
-        object.oscillator.frequency.value = object.frequency;
     }
 
     document.onreadystatechange = () => {
