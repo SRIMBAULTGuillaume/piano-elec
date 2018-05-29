@@ -2,7 +2,7 @@
   "name": "elec",
   "version": "1.0.0",
   "description": "",
-  "main": "main/index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron ."
@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^2.0.1"
+    "electron": "^2.0.1",
+    "electron-connect": "^0.6.3",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^4.0.1"
   }
 }

@@ -1,0 +1,31 @@
+.app-title{
+    color: #eee;
+    font-family: 'Roboto', sans-serif;
+    padding-left : 10px;
+    line-height:25px;
+}
+
+.btn-group{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.action-btn {
+    height: 100%;
+    margin-left : 0px;
+    padding: 0 10px;
+
+    -webkit-app-region: no-drag;
+}
+
+.action-btn:hover {
+    background-color: #777;
+}
+
+#exit-btn {
+    background-color: rgb(255, 70, 70)
+}
+
+#exit-btn:hover {
+    background-color: rgb(240, 40, 40)
+}

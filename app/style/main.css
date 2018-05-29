@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+.app-title {
+  color: #eee;
+  font-family: 'Roboto', sans-serif;
+  padding-left: 10px;
+  line-height: 25px; }
+
+.btn-group {
+  display: flex;
+  flex-direction: row-reverse; }
+
+.action-btn {
+  height: 100%;
+  margin-left: 0px;
+  padding: 0 10px;
+  -webkit-app-region: no-drag; }
+
+.action-btn:hover {
+  background-color: #777; }
+
+#exit-btn {
+  background-color: #ff4646; }
+
+#exit-btn:hover {
+  background-color: #f02828; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #555;
+  height: 25px;
+  width: 100%;
+  -webkit-app-region: drag; }
+
+.content {
+  display: flex;
+  justify-content: space-around;
+  width: 100%; }
+
+.btn-clickable {
+  height: 100px;
+  width: 100px;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  background-color: black; }
+  .btn-clickable.clicked {
+    background-color: #333333; }
+  .btn-clickable:nth-child(1) {
+    background-color: #b748e2; }
+    .btn-clickable:nth-child(1).clicked {
+      background-color: #daa0f0; }
+  .btn-clickable:nth-child(2) {
+    background-color: #00a3b2; }
+    .btn-clickable:nth-child(2).clicked {
+      background-color: #19ecff; }
+  .btn-clickable:nth-child(3) {
+    background-color: #6a4a3c; }
+    .btn-clickable:nth-child(3).clicked {
+      background-color: #a87964; }
+  .btn-clickable:nth-child(4) {
+    background-color: #cc333f; }
+    .btn-clickable:nth-child(4).clicked {
+      background-color: #e0858c; }
+  .btn-clickable:nth-child(5) {
+    background-color: #eb6841; }
+    .btn-clickable:nth-child(5).clicked {
+      background-color: #f5b19d; }
+  .btn-clickable:nth-child(6) {
+    background-color: #edc951; }
+    .btn-clickable:nth-child(6).clicked {
+      background-color: #f7e6ad; }
+  .btn-clickable:nth-child(7) {
+    background-color: #b9ff6b; }
+    .btn-clickable:nth-child(7).clicked {
+      background-color: #e9ffd1; }
+  .btn-clickable:nth-child(8) {
+    background-color: #45cc7b; }
+    .btn-clickable:nth-child(8).clicked {
+      background-color: #95e2b4; }

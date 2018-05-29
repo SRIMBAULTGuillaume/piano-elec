@@ -41,6 +41,7 @@ ipcMain.on('change-size', (event, arg) => {
 
 app.on('ready', () => {
     createWindow();
+    console.log('start');
 })
 
 app.on('activate', function () {
