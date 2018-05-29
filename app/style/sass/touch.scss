@@ -1,0 +1,38 @@
+$color-tab: rgb(183, 72, 226), 
+            rgb(0, 163, 178), 
+            rgb(106, 74, 60), 
+            rgb(204, 51, 63), 
+            rgb(235, 104, 65), 
+            rgb(237, 201, 81), 
+            rgb(185, 255, 107), 
+            rgb(69, 204, 123);
+
+$default-color: rgb(0, 0, 0);
+
+.btn-clickable{
+    height: 100px;
+    width: 100px; 
+
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+
+    $lighter: 20%;
+
+    background-color: $default-color;
+
+    &.clicked{
+        background-color: lighten($default-color, $lighter)
+    }
+
+    $i: 1;
+    @each $color in $color-tab {
+        &:nth-child(#{$i}) {
+            background-color: $color;
+            &.clicked{
+                background-color: lighten($color, $lighter)
+            }
+        }
+        $i: $i + 1;
+    }
+}

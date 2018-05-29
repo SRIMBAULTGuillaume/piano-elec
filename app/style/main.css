@@ -24,24 +24,6 @@
 #exit-btn:hover {
   background-color: #f02828; }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%; }
-
-header {
-  display: flex;
-  justify-content: space-between;
-  background-color: #555;
-  height: 25px;
-  width: 100%;
-  -webkit-app-region: drag; }
-
-.content {
-  display: flex;
-  justify-content: space-around;
-  width: 100%; }
-
 .btn-clickable {
   height: 100px;
   width: 100px;
@@ -83,3 +65,21 @@ header {
     background-color: #45cc7b; }
     .btn-clickable:nth-child(8).clicked {
       background-color: #95e2b4; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #555;
+  height: 25px;
+  width: 100%;
+  -webkit-app-region: drag; }
+
+.content {
+  display: flex;
+  justify-content: space-around;
+  width: 100%; }
