@@ -14,18 +14,21 @@ gulp.task('start', () => {
 
     electron.start();
 
-    //Watch js files and restart Electron if they change
-    gulp.watch('./*.js', () => {
+    gulp.watch('./app/*.html', () => {
         electron.restart();
     });
-    //watch css files, but only reload (no restart necessary)
+    gulp.watch('./app/js/*.js', () => {
+        electron.restart();
+    });
+    gulp.watch('./app.js', () => {
+        electron.restart();
+    });
+
     gulp.watch(['./app/style/sass/**/*.scss'], () => {
         refreshSass();
 
         electron.reload();
     });
-    //watch html
-    gulp.watch(['.app/index.html'], electron.reload());
 });
 
 gulp.task('sass', function () {

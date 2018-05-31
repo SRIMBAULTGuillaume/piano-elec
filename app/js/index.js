@@ -2,6 +2,7 @@
     // Retrieve remote BrowserWindow
     const { ipcRenderer } = require('electron');
     const { BrowserWindow } = require('electron').remote;
+    let menu;
 
     const oscillatorType = 'sine'; //sine, square, triangle, sawtooth
 
@@ -11,7 +12,11 @@
 
     var mouseDown = false;
 
+
+
     function init() {
+        menu = new menuBar(document);
+        
         window.buttonList = {};
 
         buttonList = document.getElementsByClassName('btn-clickable');
@@ -30,20 +35,6 @@
     };
 
     function init_event() {
-
-        // window function
-        document.getElementById('min-btn').addEventListener('click', function () {
-            let window = BrowserWindow.getFocusedWindow();
-            window.minimize();
-        });
-        document.getElementById('max-btn').addEventListener('click', function () {
-            ipcRenderer.send('change-size');
-        });
-        document.getElementById('exit-btn').addEventListener('click', function () {
-            let window = BrowserWindow.getFocusedWindow();
-            window.close();
-        });
-
 
         window.onkeydown = function (e) {
             var key = e.keyCode ? e.keyCode : e.which;
@@ -92,6 +83,10 @@
                 e.target.touch.soundUp();
             })
         }
+
+        document.getElementById('setting-icon').addEventListener('click', e => {
+            ipcRenderer.send('open-settings', 'yo');
+        })
     }
 
     document.onreadystatechange = () => {

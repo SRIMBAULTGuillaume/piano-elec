@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <link href="style/main.css" rel="stylesheet" type="text/css" />
+    </head>
+    <header>
+        <div class="app-title">
+            Settings
+        </div>
+        <div class="btn-group">
+            <a id="exit-btn" class="action-btn">
+                <svg width="11" height="25" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" x2="11" y1="8" y2="19" stroke="white" stroke-width="2" />
+                    <line x1="0" x2="11" y1="19" y2="8" stroke="white" stroke-width="2" />
+                </svg>
+            </a>
+            <a id="max-btn" class="action-btn">
+                <svg width="11" height="25" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="1" y="9" width="8" height="8" stroke="#eee" fill="transparent" stroke-width="2" />
+                </svg>
+            </a>
+            <a id="min-btn" class="action-btn">
+                <svg width="11" height="25" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" x2="11" y1="16" y2="16" stroke="#eee" stroke-width="2" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <body>
+        <div class="content">
+            Je suis les settings
+        </div>
+    </body>
+    <script>
+        require('electron-connect').client.create()
+        document.onreadystatechange = () => {
+            if (document.readyState == "complete") {
+                var menu = new menuBar()
+            }
+        };
+    </script>
+
+    <script src="js/menuBar.js"></script>
+</html>

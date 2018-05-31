@@ -19,20 +19,22 @@ $default-color: rgb(0, 0, 0);
 
     $lighter: 20%;
 
-    background-color: $default-color;
+    //background-color: $default-color;
 
     &.clicked{
         background-color: lighten($default-color, $lighter)
     }
 
-    $i: 1;
-    @each $color in $color-tab {
-        &:nth-child(#{$i}) {
-            background-color: $color;
-            &.clicked{
-                background-color: lighten($color, $lighter)
-            }
-        }
-        $i: $i + 1;
-    }
+    border: 1px black solid;
+
+    // $i: 1;
+    // @each $color in $color-tab {
+    //     &:nth-child(#{$i}) {
+    //         background-color: $color;
+    //         &.clicked{
+    //             background-color: lighten($color, $lighter)
+    //         }
+    //     }
+    //     $i: $i + 1;
+    // }
 }
