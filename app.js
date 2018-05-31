@@ -9,6 +9,7 @@ const BrowserWindow = electron.BrowserWindow;
 
 let mainWindow;
 let windowMaximised = false;
+let mainWindowPosition;
 
 let settingWindow;
 
@@ -42,8 +43,8 @@ var createWindow = function () {
 var openSettingWindow = function () {
     settingWindow = new BrowserWindow({
         frame: false,
-        width: 1600,
-        height: 1080,
+        width: 400,
+        height: 200,
         resizable: false,
         parent: mainWindow,
         modal: true
@@ -57,18 +58,18 @@ var openSettingWindow = function () {
 }
 
 ipcMain.on('change-size', (event, arg) => {
-    if (windowMaximised)
+    if (windowMaximised){
         mainWindow.setSize(1200, 600);
-    else
+        mainWindow.setPosition(mainWindowPosition[0], mainWindowPosition[1])
+    } else {
+        mainWindowPosition = mainWindow.getPosition();
         mainWindow.maximize();
+    }
     windowMaximised = !windowMaximised;
 })
 
-ipcMain.on('open-settings', (event, arg1) => {
+ipcMain.on('open-settings', (event, ...args) => {
     openSettingWindow();
-    console.log(event == mainWindow);
-    console.log(event);
-    console.log(arg1);
 })
 
 app.on('ready', () => {

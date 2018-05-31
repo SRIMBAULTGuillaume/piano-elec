@@ -30,17 +30,16 @@
 
     <body>
         <div class="content">
-            Je suis les settings
+            <input type="checkbox"></input>
         </div>
     </body>
     <script>
         require('electron-connect').client.create()
         document.onreadystatechange = () => {
             if (document.readyState == "complete") {
-                var menu = new menuBar()
+                var menu = new menuBar(document)
             }
         };
     </script>
-
     <script src="js/menuBar.js"></script>
 </html>

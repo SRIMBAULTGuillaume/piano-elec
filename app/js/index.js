@@ -12,7 +12,8 @@
 
     var mouseDown = false;
 
-
+    let actualTimestamp = 0;
+    let score = 0;
 
     function init() {
         menu = new menuBar(document);
@@ -32,6 +33,17 @@
         }
 
         init_event();
+
+        //generation
+        let time = getRandomInt(5000)
+        actualTimestamp = Date.now() + time;
+        setTimeout(() => {
+            let btn = getRandomInt(buttonList.length)
+            buttonList[btn].classList.add('alert');
+            buttonList[btn].alerted = true;
+            console.log(buttonList[btn].alerted)
+        }, time)
+
     };
 
     function init_event() {
@@ -63,6 +75,13 @@
             buttonList[i].addEventListener('mousedown', function (e) {
                 e.target.classList.add('clicked');
                 e.target.touch.soundUp();
+                e.target.classList.remove('alert')
+                if (e.target.alerted){
+                    score = Date.now() - actualTimestamp;
+                    console.log("score : " + score);
+                    e.target.alerted = false;
+                } else 
+                    console.log('lose');
             })
 
             buttonList[i].addEventListener('mouseup', function (e) {
@@ -85,7 +104,7 @@
         }
 
         document.getElementById('setting-icon').addEventListener('click', e => {
-            ipcRenderer.send('open-settings', 'yo');
+            ipcRenderer.send('open-settings');
         })
     }
 
@@ -94,4 +113,8 @@
             init();
         }
     };
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    }
 })();

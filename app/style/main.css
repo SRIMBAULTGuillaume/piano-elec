@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
+.menuBar {
+  position: fixed; }
+
 .app-title {
   color: #eee;
   font-family: 'Roboto', sans-serif;
@@ -33,11 +36,14 @@
   border: 1px black solid; }
   .btn-clickable.clicked {
     background-color: #333333; }
+  .btn-clickable.alert {
+    border: 3px red solid; }
 
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%; }
+  height: 100%;
+  overflow-y: hidden; }
 
 header {
   display: flex;
@@ -47,22 +53,24 @@ header {
   width: 100%;
   -webkit-app-region: drag; }
 
-.content {
+.bottom-content {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 100%; }
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%; }
 
 .settings-bar {
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 50px; }
+  height: 30px;
+  margin: 7px 0; }
 
 #setting-icon {
-  padding: 10px;
-  height: 50px;
-  width: 50px; }
+  margin: 0 7px;
+  height: 30px;
+  width: 30px; }
 
 #setting-svg {
   fill: #666666; }

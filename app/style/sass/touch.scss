@@ -25,6 +25,10 @@ $default-color: rgb(0, 0, 0);
         background-color: lighten($default-color, $lighter)
     }
 
+    &.alert{
+        border: 3px red solid;
+    }
+
     border: 1px black solid;
 
     // $i: 1;
