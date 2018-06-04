@@ -1,7 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
-.menuBar {
-  position: fixed; }
-
 .app-title {
   color: #eee;
   font-family: 'Roboto', sans-serif;
@@ -33,11 +30,48 @@
   user-select: none;
   -webkit-user-drag: none;
   -webkit-user-select: none;
-  border: 1px black solid; }
+  margin: 3px;
+  background-color: black;
+  transition-property: border-color, border-width, margin;
+  transition-duration: 500ms;
+  border: 1px rgba(0, 0, 0, 0) solid; }
   .btn-clickable.clicked {
-    background-color: #333333; }
+    background-color: #1a1a1a; }
   .btn-clickable.alert {
-    border: 3px red solid; }
+    border: 3px red solid;
+    margin: 1px; }
+  .btn-clickable:nth-child(1) {
+    background-color: #329632; }
+    .btn-clickable:nth-child(1).clicked {
+      background-color: #3fbc3f; }
+  .btn-clickable:nth-child(2) {
+    background-color: #3fbc3f; }
+    .btn-clickable:nth-child(2).clicked {
+      background-color: #63cb63; }
+  .btn-clickable:nth-child(3) {
+    background-color: #50c550; }
+    .btn-clickable:nth-child(3).clicked {
+      background-color: #76d176; }
+  .btn-clickable:nth-child(4) {
+    background-color: #63cb63; }
+    .btn-clickable:nth-child(4).clicked {
+      background-color: #89d889; }
+  .btn-clickable:nth-child(5) {
+    background-color: #76d176; }
+    .btn-clickable:nth-child(5).clicked {
+      background-color: #9cde9c; }
+  .btn-clickable:nth-child(6) {
+    background-color: #89d889; }
+    .btn-clickable:nth-child(6).clicked {
+      background-color: #b0e5b0; }
+  .btn-clickable:nth-child(7) {
+    background-color: #9cde9c; }
+    .btn-clickable:nth-child(7).clicked {
+      background-color: #c3ebc3; }
+  .btn-clickable:nth-child(8) {
+    background-color: #b0e5b0; }
+    .btn-clickable:nth-child(8).clicked {
+      background-color: #d6f1d6; }
 
 html, body {
   margin: 0;
@@ -53,12 +87,26 @@ header {
   width: 100%;
   -webkit-app-region: drag; }
 
-.bottom-content {
+.content {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
-  height: 100%; }
+  height: calc(100% - 25px); }
+
+.upper-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; }
+  .upper-content .score-container {
+    margin: 0.8em;
+    display: flex;
+    flex-direction: row; }
+
+.middle-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
 
 .settings-bar {
   display: flex;

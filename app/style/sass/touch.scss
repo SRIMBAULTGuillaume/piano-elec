@@ -1,11 +1,21 @@
-$color-tab: rgb(183, 72, 226), 
-            rgb(0, 163, 178), 
-            rgb(106, 74, 60), 
-            rgb(204, 51, 63), 
-            rgb(235, 104, 65), 
-            rgb(237, 201, 81), 
-            rgb(185, 255, 107), 
-            rgb(69, 204, 123);
+// $color-tab: rgb(183, 72, 226), 
+//             rgb(0, 163, 178), 
+//             rgb(106, 74, 60), 
+//             rgb(204, 51, 63), 
+//             rgb(235, 104, 65), 
+//             rgb(237, 201, 81), 
+//             rgb(185, 255, 107), 
+//             rgb(69, 204, 123);
+
+$base-color: rgb(50, 150, 50);
+$color-tab: $base-color,
+            lighten($base-color, 10%),
+            lighten($base-color, 15%),
+            lighten($base-color, 20%),
+            lighten($base-color, 25%),
+            lighten($base-color, 30%),
+            lighten($base-color, 35%),
+            lighten($base-color, 40%);
 
 $default-color: rgb(0, 0, 0);
 
@@ -17,28 +27,34 @@ $default-color: rgb(0, 0, 0);
     -webkit-user-drag: none;
     -webkit-user-select: none;
 
-    $lighter: 20%;
+    $lighter: 10%;
 
-    //background-color: $default-color;
+    margin: 3px;
+
+    background-color: $default-color;
+
+    transition-property: border-color, border-width, margin;
+    transition-duration: 500ms;
 
     &.clicked{
-        background-color: lighten($default-color, $lighter)
+        background-color: lighten($default-color, $lighter);
     }
 
     &.alert{
         border: 3px red solid;
+        margin: 1px;
     }
 
-    border: 1px black solid;
+    border: 1px rgba(0, 0, 0, 0) solid;
 
-    // $i: 1;
-    // @each $color in $color-tab {
-    //     &:nth-child(#{$i}) {
-    //         background-color: $color;
-    //         &.clicked{
-    //             background-color: lighten($color, $lighter)
-    //         }
-    //     }
-    //     $i: $i + 1;
-    // }
+    $i: 1;
+    @each $color in $color-tab {
+        &:nth-child(#{$i}) {
+            background-color: $color;
+            &.clicked{
+                background-color: lighten($color, $lighter)
+            }
+        }
+        $i: $i + 1;
+    }
 }

@@ -13,36 +13,32 @@
     var mouseDown = false;
 
     let actualTimestamp = 0;
-    let score = 0;
 
     function init() {
         menu = new menuBar(document);
+        Const.scoreView = document.getElementById('score');
+        Const.popupView = document.getElementById('popup');
         
         window.buttonList = {};
 
         buttonList = document.getElementsByClassName('btn-clickable');
 
         for (let i = 0; i < buttonList.length; i++){
-
-            buttonList[i].touch = new touch(buttonList[i].dataset.key, 
-                                            buttonList[i].dataset.frequency, 
-                                            oscillatorType, 
-                                            context);
-
-            buttonList[i].touch.setupSound();
+            buttonList[i].touch = new createTouch(buttonList[i],
+                                                oscillatorType, 
+                                                context, 
+                                                window);
         }
 
         init_event();
 
-        //generation
-        let time = getRandomInt(5000)
-        actualTimestamp = Date.now() + time;
-        setTimeout(() => {
-            let btn = getRandomInt(buttonList.length)
-            buttonList[btn].classList.add('alert');
-            buttonList[btn].alerted = true;
-            console.log(buttonList[btn].alerted)
-        }, time)
+        Const.score = 1000;
+
+        // buttonList[0].touch.setAlert(1000, 1000);
+        // buttonList[1].touch.setAlert(1500, 1000);
+
+        buttonList[0].touch.spawnTouch(1500, 500);
+        buttonList[1].touch.spawnTouch(2000, 500);
 
     };
 
@@ -50,6 +46,11 @@
 
         window.onkeydown = function (e) {
             var key = e.keyCode ? e.keyCode : e.which;
+
+            if(key == 48){
+                buttonList[0].touch.spawnTouch(1500, 500);
+                buttonList[1].touch.spawnTouch(2000, 500);
+            }
 
             if (document.getElementById('button-' + key) != undefined)
                 document.getElementById('button-' + key).dispatchEvent(new Event("mousedown"))
@@ -64,43 +65,10 @@
 
         
         document.body.onmousedown = function () {
-            mouseDown = true;
+            Const.keyPressed = true;
         }
         document.body.onmouseup = function () {
-            mouseDown = false;
-        }
-
-        for (let i = 0; i < buttonList.length; i++) {
-
-            buttonList[i].addEventListener('mousedown', function (e) {
-                e.target.classList.add('clicked');
-                e.target.touch.soundUp();
-                e.target.classList.remove('alert')
-                if (e.target.alerted){
-                    score = Date.now() - actualTimestamp;
-                    console.log("score : " + score);
-                    e.target.alerted = false;
-                } else 
-                    console.log('lose');
-            })
-
-            buttonList[i].addEventListener('mouseup', function (e) {
-                e.target.classList.remove('clicked');
-                e.target.touch.soundDown();
-            })
-
-            buttonList[i].addEventListener('pointerout', function (e) {
-                e.target.classList.remove('clicked');
-                e.target.touch.soundDown();
-            })
-
-            buttonList[i].addEventListener('pointerenter', function (e) {
-                if (!mouseDown)
-                    return;
-
-                e.target.classList.add('clicked');
-                e.target.touch.soundUp();
-            })
+            Const.keyPressed = false;
         }
 
         document.getElementById('setting-icon').addEventListener('click', e => {
